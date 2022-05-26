@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/img_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/bar" />
+
+
+    <ImageView
+        android:id="@+id/img_Logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_bubble"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_Logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="Manage Your collections"
+        android:textSize="20sp"
+        android:id="@+id/Splash_Heading">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/Splash_Desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Splash_Heading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="A safe place where users can managed their collections"
+        android:textSize="17sp"></TextView>
+
+    <Button
+        android:id="@+id/startButton"
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Splash_Desc"
+        android:layout_centerHorizontal="true"
+        android:width="308dp"
+        android:background="@android:color/transparent"
+        android:text="@string/get_started"
+        android:textColor="#FA955C"
+        app:cornerRadius="@android:dimen/thumbnail_height" />
+
+
+</RelativeLayout>

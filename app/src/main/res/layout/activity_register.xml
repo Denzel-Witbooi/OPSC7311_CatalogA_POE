@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateAccountActivity"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/Reg_bar"/>
+
+    <ImageButton
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_back"
+        android:background="@color/purple_500"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Reg_bar"
+        android:text="Welcome onboard"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:id="@+id/Reg_Welcome"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Reg_Welcome"
+        android:text="Sign up to customize and sort all your items"
+        android:layout_centerHorizontal="true"
+        android:textSize="12dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/Reg_Msg"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/Reg_Msg"
+        android:padding="30dp"
+        android:id="@+id/Reg_Layout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Username"
+            android:height="57dp"
+            android:backgroundTint="@color/white"
+            android:paddingLeft="10dp"
+            android:id="@+id/register_username_ed"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Email"
+            android:height="57dp"
+            android:backgroundTint="@color/white"
+            android:paddingLeft="10dp"
+            android:id="@+id/register_email_ed"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Password"
+            android:height="57dp"
+            android:backgroundTint="@color/white"
+            android:paddingLeft="10dp"
+            android:id="@+id/register_password_ed"
+            android:layout_marginTop="10dp"/>
+
+<!--        <EditText-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Confirm Password"-->
+<!--            android:height="57dp"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:id="@+id/Reg_Confirm"-->
+<!--            android:layout_marginTop="10dp"/>-->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/create_acc_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Reg_Layout"
+        android:layout_centerHorizontal="true"
+        android:width="300dp"
+        android:text="Register"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/create_acc_button"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account?"
+            android:textSize="12sp"/>
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/login"
+            android:textColor="@color/purple_500"
+            android:textSize="10sp" />
+
+        <ProgressBar
+            android:id="@+id/create_acct_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

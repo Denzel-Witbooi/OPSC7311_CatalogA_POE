@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Catalog</string>
+    <string name="register">Register</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="login">Login</string>
+    <string name="enter_your_password">Enter your Password</string>
+    <string name="enter_your_email">Enter your Email</string>
+    <string name="item_name_hint">Enter item name</string>
+    <string name="description_hint">Description</string>
+    <string name="no_items_hint">Add an item by clicking the + icon</string>
+    <string name="sign_out">Signout</string>
+    <string name="menu_title">Add item</string>
+    <string name="get_started">Get Started</string>
+</resources>
