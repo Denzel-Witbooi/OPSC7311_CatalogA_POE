@@ -93,6 +93,17 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             }
         });
+
+        loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //we go to loginActivity
+                startActivity(new Intent(CreateAccountActivity.this,
+                        LoginActivity.class));
+                finish();
+            }
+        });
     }
 
     private void createUserEmailAccount(String email, String password, String username)

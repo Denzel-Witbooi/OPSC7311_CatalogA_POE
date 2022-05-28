@@ -56,8 +56,8 @@
         android:padding="30dp"
         >
 
-        <EditText
-            android:id="@+id/Reg_Email"
+        <AutoCompleteTextView
+            android:id="@+id/login_email_atw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -67,7 +67,7 @@
             android:paddingLeft="10dp"/>
 
         <EditText
-            android:id="@+id/Reg_Pass"
+            android:id="@+id/login_password_ed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -82,20 +82,19 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/Btn_Login"
+        android:id="@+id/login_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
         android:layout_below="@id/Reg_Layout"
         android:layout_centerHorizontal="true"
         android:width="300dp"
-        android:textSize="18sp"
-       />
+        android:text="@string/login"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Btn_Login"
+        android:layout_below="@id/login_user_button"
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -117,8 +116,14 @@
             android:textColor="@color/purple_500"
             android:textSize="10sp" />
 
-
+        <ProgressBar
+            android:id="@+id/login_acct_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
+
 
 
 </RelativeLayout>

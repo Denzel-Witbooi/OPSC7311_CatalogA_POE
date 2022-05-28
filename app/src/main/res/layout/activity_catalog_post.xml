@@ -7,7 +7,7 @@
     tools:context=".PostCatalogActivity">
 
     <EditText
-        android:id="@+id/post_title"
+        android:id="@+id/post_title_et"
         android:layout_width="384dp"
         android:layout_height="45dp"
         android:layout_marginStart="12dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/post_imageView" />
 
     <EditText
-        android:id="@+id/post_description"
+        android:id="@+id/post_description_et"
         android:layout_width="384dp"
         android:layout_height="118dp"
         android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_category" />
+        app:layout_constraintTop_toBottomOf="@+id/post_category_et" />
 
     <ImageView
         android:id="@+id/post_imageView"
@@ -47,7 +47,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/image_three"
-        app:layout_constraintBottom_toTopOf="@+id/post_title"
+        app:layout_constraintBottom_toTopOf="@+id/post_title_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +93,7 @@
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <EditText
-        android:id="@+id/post_category"
+        android:id="@+id/post_category_et"
         android:layout_width="384dp"
         android:layout_height="45dp"
         android:layout_marginTop="24dp"
@@ -104,7 +104,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_title" />
+        app:layout_constraintTop_toBottomOf="@+id/post_title_et" />
 
     <ProgressBar
         android:id="@+id/post_progressBar"
@@ -117,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_description" />
+        app:layout_constraintTop_toBottomOf="@+id/post_description_et" />
 
     <Button
         android:id="@+id/post_save_catalog_button"

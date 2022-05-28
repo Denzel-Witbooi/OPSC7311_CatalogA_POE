@@ -1,6 +1,6 @@
 package com.opsc7311.catalog.model;
 
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
 
 public class Catalog {
     private String title;
