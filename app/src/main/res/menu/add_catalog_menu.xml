@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/menu_title"
-        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        app:showAsAction="never">
+    </item>
 
-    <item android:id="@+id/action_signout"
-        android:title="@string/sign_out"
-        app:showAsAction="never"/>
+    <item
+        android:id="@+id/Category"
+        android:title="Category"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/Add"
+        android:title="Add"
+        app:showAsAction="never"
+        >
+    </item>
 </menu>

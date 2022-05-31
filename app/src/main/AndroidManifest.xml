@@ -27,6 +27,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".CatalogListActivity" />
         <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".AddCategoryActivity" />
     </application>
 
 </manifest>

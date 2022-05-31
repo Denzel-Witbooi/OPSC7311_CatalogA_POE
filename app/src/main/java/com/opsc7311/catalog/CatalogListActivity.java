@@ -87,6 +87,17 @@ public class CatalogListActivity extends AppCompatActivity {
 //                    finish();
                 }
                 break;
+            case R.id.action_home:
+                if (user != null && firebaseAuth != null) {
+                    startActivity(new Intent(CatalogListActivity.this, CatalogListActivity.class));
+                }
+                break;
+            case R.id.action_category:
+
+                    startActivity(new Intent(CatalogListActivity.this, AddCategoryActivity.class));
+
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
