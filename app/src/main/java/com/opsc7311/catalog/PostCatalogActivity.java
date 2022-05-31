@@ -5,11 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,21 +21,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.opsc7311.catalog.model.Catalog;
 import com.opsc7311.catalog.util.CatalogApi;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class PostCatalogActivity extends AppCompatActivity implements View.OnClickListener {
@@ -43,6 +53,9 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     private ImageView addPhotoButton;
     private EditText titleEditText;
     private EditText categoryEditText;
+
+    private Spinner categoryItems;
+
     private EditText descriptionEditText;
     private TextView currentUserTextView;
     private ImageView imageView;
@@ -59,6 +72,9 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     private StorageReference storageReference;
 
     private CollectionReference collectionReference = db.collection("Catalog");
+    FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+    CollectionReference categoryRef = rootRef.collection("Category");
+
     private Uri imageUri;
 
 
@@ -73,7 +89,9 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.category_progressBar);
         titleEditText = findViewById(R.id.post_title_et);
-        categoryEditText = findViewById(R.id.post_category_et);
+
+        categoryItems = findViewById(R.id.category_items_spinner);
+
         descriptionEditText = findViewById(R.id.post_description_et);
         currentUserTextView = findViewById(R.id.post_username_textview);
 
@@ -92,6 +110,26 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
             currentUserTextView.setText(currentUserName);
         }
 
+        Spinner spinner = findViewById(R.id.category_items_spinner);
+        List<String> categories = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        categoryRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String subject = document.getString("name");
+                        if (Objects.equals(currentUserName, document.getString("userName"))) {
+                            categories.add(subject);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -103,6 +141,45 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return  super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_add:
+                // Take users to add Catalog
+                if (user != null && firebaseAuth != null) {
+                    startActivity(new Intent(PostCatalogActivity.this, PostCatalogActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_signout:
+                // sign user out
+                if (user != null && firebaseAuth != null) {
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(PostCatalogActivity.this, MainActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_home:
+                if (user != null && firebaseAuth != null) {
+                    startActivity(new Intent(PostCatalogActivity.this, CatalogListActivity.class));
+                }
+                break;
+            case R.id.action_category:
+
+                startActivity(new Intent(PostCatalogActivity.this, AddCategoryActivity.class));
+
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -214,6 +291,8 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
         super.onStart();
         user = firebaseAuth.getCurrentUser();
         firebaseAuth.addAuthStateListener(authStateListener);
+
+
     }
 
     @Override

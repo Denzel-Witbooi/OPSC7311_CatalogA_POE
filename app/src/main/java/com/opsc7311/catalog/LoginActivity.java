@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     //Go to ListActivity
                                                     startActivity(new Intent(LoginActivity.this,
-                                                            CatalogListActivity.class));
+                                                            PostCatalogActivity.class));
 
                                                 }
 
