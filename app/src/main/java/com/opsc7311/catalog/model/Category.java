@@ -5,21 +5,22 @@ import com.google.firebase.Timestamp;
 public class Category {
 
     private String name;
-    private int amount;
-
+    private String amount;
     private String userId;
     private Timestamp timeAdded;
     private String userName;
+    private String imageUrl;
 
     public Category() {
     }
 
-    public Category(String name, int amount, String userId, Timestamp timeAdded, String userName) {
+    public Category(String name, String amount, String userId, Timestamp timeAdded, String userName, String imageUrl) {
         this.name = name;
         this.amount = amount;
         this.userId = userId;
         this.timeAdded = timeAdded;
         this.userName = userName;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
@@ -30,11 +31,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -60,5 +61,13 @@ public class Category {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,11 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.opsc7311.catalog.model.Catalog;
-import com.opsc7311.catalog.ui.CatalogRecyclerAdapter;
 import com.opsc7311.catalog.util.CatalogApi;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class PostCatalogActivity extends AppCompatActivity implements View.OnClickListener {
@@ -74,7 +71,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
         storageReference = FirebaseStorage.getInstance().getReference();
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.post_progressBar);
+        progressBar = findViewById(R.id.category_progressBar);
         titleEditText = findViewById(R.id.post_title_et);
         categoryEditText = findViewById(R.id.post_category_et);
         descriptionEditText = findViewById(R.id.post_description_et);

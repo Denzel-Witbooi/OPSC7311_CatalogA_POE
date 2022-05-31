@@ -1,91 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddCategoryActivity">
 
+
+    <EditText
+        android:id="@+id/category_name_ed"
+        android:layout_width="384dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/input_outline"
+        android:ems="10"
+        android:hint="Enter category name"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_imageView" />
+
+    <EditText
+        android:id="@+id/category_amount_ed"
+        android:layout_width="384dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_outline"
+        android:ems="10"
+        android:hint="Enter amount of categories"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_name_ed" />
+
+    <ImageView
+        android:id="@+id/category_imageView"
+        android:layout_width="378dp"
+        android:layout_height="173dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/image_three"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_title_et" />
+
     <TextView
+        android:id="@+id/category_title_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
         android:text="Add Category"
-        android:textSize="30dp"></TextView>
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    <LinearLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_category_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="50dp">
+        android:layout_marginBottom="136dp"
+        android:padding="12dp"
+        android:text="Create Category"
+        app:cornerRadius="100dp"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_Name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text"
-            app:helperText="Mandatory"
-            app:helperTextTextColor="@color/teal_700"
-            app:startIconDrawable="@drawable/ic_cat_name">
+    </com.google.android.material.button.MaterialButton>
 
-            <EditText
-                android:id="@+id/category_name_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:hint="Category Name"
-                android:imeOptions="actionNext"
-                android:inputType="text"></EditText>
-        </com.google.android.material.textfield.TextInputLayout>
+    <ProgressBar
+        android:id="@+id/category_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="56dp"
+        android:paddingTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/create_category_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_amount_ed" />
 
+    <ImageView
+        android:id="@+id/categoryCameraButton"
+        android:layout_width="81dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="@+id/category_imageView"
+        app:layout_constraintEnd_toEndOf="@+id/category_imageView"
+        app:layout_constraintStart_toStartOf="@+id/category_imageView"
+        app:layout_constraintTop_toTopOf="@+id/category_imageView"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="2"
-            app:endIconMode="clear_text"
-            app:helperText="Mandatory"
-            app:helperTextTextColor="@color/teal_700"
-            app:startIconDrawable="@drawable/ic_goal">
-
-            <EditText
-                android:id="@+id/category_goal_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="No. of expected Items "
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:maxLength="2"></EditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/create_category_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:padding="12dp"
-            android:text="Create Category"
-            app:cornerRadius="100dp"
-            app:iconGravity="textStart">
-
-        </com.google.android.material.button.MaterialButton>
-
-        <ProgressBar
-            android:id="@+id/post_progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/create_category_button" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
