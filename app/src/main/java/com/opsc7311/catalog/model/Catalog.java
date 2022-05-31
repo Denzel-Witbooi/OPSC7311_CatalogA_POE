@@ -3,6 +3,7 @@ package com.opsc7311.catalog.model;
 import com.google.firebase.Timestamp;
 
 public class Catalog {
+    private String catalogId;
     private String title;
     private String category;
     private String description;
@@ -14,11 +15,8 @@ public class Catalog {
     public Catalog() {
     }
 
-    public Catalog(String title,
-                   String category,
-                   String description,
-                   String imageUrl, String userId,
-                   Timestamp timeAdded, String userName) {
+    public Catalog(String catalogId, String title, String category, String description, String imageUrl, String userId, Timestamp timeAdded, String userName) {
+        this.catalogId = catalogId;
         this.title = title;
         this.category = category;
         this.description = description;
@@ -26,6 +24,14 @@ public class Catalog {
         this.userId = userId;
         this.timeAdded = timeAdded;
         this.userName = userName;
+    }
+
+    public String getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(String catalogId) {
+        this.catalogId = catalogId;
     }
 
     public String getTitle() {

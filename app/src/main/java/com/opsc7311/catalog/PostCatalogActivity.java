@@ -52,7 +52,6 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     private ProgressBar progressBar;
     private ImageView addPhotoButton;
     private EditText titleEditText;
-    private EditText categoryEditText;
 
     private Spinner categoryItems;
 
@@ -110,11 +109,13 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
             currentUserTextView.setText(currentUserName);
         }
 
-        Spinner spinner = findViewById(R.id.category_items_spinner);
+        categoryItems = findViewById(R.id.category_items_spinner);
+
         List<String> categories = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        categoryItems.setAdapter(adapter);
+
         categoryRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -206,7 +207,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
      */
     private void saveCatalog(){
         final String title = titleEditText.getText().toString().trim();
-        final String category = categoryEditText.getText().toString().trim();
+        final String category = categoryItems.getSelectedItem().toString();
         final String description = descriptionEditText.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
@@ -228,10 +229,13 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                             filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-
+                                    DocumentReference documentReference =  db
+                                            .collection("Catalog")
+                                            .document();
                                     String imageUrl = uri.toString();
                                     //TODO: create a Catalog Object - model : COMPLETE
                                     Catalog catalog = new Catalog();
+                                    catalog.setCatalogId(documentReference.getId());
                                     catalog.setTitle(title);
                                     catalog.setCategory(category);
                                     catalog.setDescription(description);
@@ -246,9 +250,9 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                                                 @Override
                                                 public void onSuccess(DocumentReference documentReference) {
 
-                                                    progressBar.setVisibility(View.INVISIBLE);
                                                     startActivity(new Intent(PostCatalogActivity.this,
                                                             CatalogListActivity.class));
+                                                    progressBar.setVisibility(View.INVISIBLE);
                                                     finish();
                                                 }
                                             })

@@ -8,10 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.opsc7311.catalog.CatalogListActivity;
 import com.opsc7311.catalog.R;
 import com.opsc7311.catalog.model.Catalog;
 import com.squareup.picasso.Picasso;
@@ -87,7 +93,7 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
         //Image View
         public ImageView image;
 
-        public ImageButton shareButton;
+        public ImageButton deleteButton;
 
         String userId;
         String username;
@@ -102,13 +108,28 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
             dateAdded = itemView.findViewById(R.id.catalog_timestamp_list);
             image = itemView.findViewById(R.id.catalog_image_list);
             name = itemView.findViewById(R.id.catalog_row_username);
-            shareButton = itemView.findViewById(R.id.catalog_row_share_button);
+            deleteButton = itemView.findViewById(R.id.catalog_row_delete_button);
 
-            shareButton.setOnClickListener(new View.OnClickListener() {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    context.startActivity();
-                }
+//                    Catalog catalog = catalogList.get(position);
+//                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//                        DocumentReference catalogRef = db.collection("Catalog")
+//                                .document(catalog.getCatalogId());
+//
+//                        catalogRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if (task.isSuccessful()) {
+//
+//                                } else {
+//
+//                                }
+//                            }
+//                        });
+                    }
             });
 
         }

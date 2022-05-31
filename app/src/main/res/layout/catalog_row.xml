@@ -10,6 +10,7 @@
 
         android:elevation="10dp"
         android:orientation="horizontal"
+        android:background="@color/browser_actions_bg_grey"
         android:alpha="0.8"
         android:gravity="end"
         android:layout_width="match_parent"
@@ -26,8 +27,8 @@
             android:layout_height="wrap_content"/>
 
         <ImageButton
-            android:id="@+id/catalog_row_share_button"
-            android:src="@android:drawable/ic_menu_share"
+            android:id="@+id/catalog_row_delete_button"
+            android:src="@android:drawable/ic_menu_delete"
             android:background="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
