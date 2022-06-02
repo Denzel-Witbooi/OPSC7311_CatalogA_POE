@@ -105,18 +105,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-    <!--    <Button-->
-<!--        android:id="@+id/post_save_catalog_button"-->
-<!--        android:layout_width="371dp"-->
-<!--        android:layout_height="51dp"-->
-<!--        android:layout_marginBottom="28dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:text="save"-->
-<!--        android:textColor="#040303"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/post_save_catalog_button"
         android:layout_width="368dp"
