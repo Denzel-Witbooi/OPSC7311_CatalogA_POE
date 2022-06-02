@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/activity_add_category.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/activity_catalog_list.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/activity_catalog_post.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/layout/catalog_row.xml" value="0.25" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/menu/add_catalog_menu.xml" value="0.2" />
+        <entry key="..\:/Users/Mikyle/AndroidStudioProjects/catalogA/app/src/main/res/menu/menu.xml" value="0.17685185185185184" />
         <entry key="..\:/repos/Android/Catalog/app/src/main/res/drawable-v24/ic_account.xml" value="0.1725" />
         <entry key="..\:/repos/Android/Catalog/app/src/main/res/drawable-v24/selector.xml" value="0.1725" />
         <entry key="..\:/repos/Android/Catalog/app/src/main/res/drawable/ic_account.xml" value="0.1725" />
