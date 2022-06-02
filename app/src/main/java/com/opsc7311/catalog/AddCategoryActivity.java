@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -226,5 +227,39 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                 startActivityForResult(galleryIntent, GALLERY_CODE);
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_add:
+                // Take users to add Catalog
+                if (user != null && firebaseAuth != null) {
+                    startActivity(new Intent(AddCategoryActivity.this, PostCatalogActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_signout:
+                // sign user out
+                if (user != null && firebaseAuth != null) {
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(AddCategoryActivity.this, MainActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_home:
+                if (user != null && firebaseAuth != null) {
+                    startActivity(new Intent(AddCategoryActivity.this, CatalogListActivity.class));
+                }
+                break;
+            case R.id.action_category:
+
+                startActivity(new Intent(AddCategoryActivity.this, AddCategoryActivity.class));
+
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

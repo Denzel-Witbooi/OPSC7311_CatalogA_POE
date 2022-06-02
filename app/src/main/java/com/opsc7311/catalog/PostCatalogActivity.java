@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +49,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     private static final int GALLERY_CODE = 1;
     private static final String TAG = "PostCatalogActivity";
 
-    private Button saveButton;
+    private MaterialButton saveButton;
     private ProgressBar progressBar;
     private ImageView addPhotoButton;
     private EditText titleEditText;
