@@ -2,18 +2,24 @@ package com.opsc7311.catalog.model;
 
 import com.google.firebase.Timestamp;
 
+/**
+ * Model class for a single Catalog item
+ */
 public class Catalog {
-    private String catalogId;
-    private String title;
-    private String category;
-    private String description;
-    private String imageUrl;
-    private String userId;
-    private Timestamp timeAdded;
-    private String userName;
 
+    private String catalogId;           // unique catalog Id to id a single catalog item
+    private String title;               // Catalog name/title
+    private String category;            // Catalog category
+    private String description;         // Catalog description
+    private String imageUrl;            // stores the path of the image
+    private String userId;              // userId to link to a Catalog for specific user
+    private Timestamp timeAdded;        // Timestamp for time added
+    private String userName;            // userName same purpose as userId
+
+    // default constructor
     public Catalog() {
     }
+
 
     public Catalog(String catalogId, String title, String category, String description, String imageUrl, String userId, Timestamp timeAdded, String userName) {
         this.catalogId = catalogId;
@@ -26,6 +32,7 @@ public class Catalog {
         this.userName = userName;
     }
 
+    // Getters and Setters
     public String getCatalogId() {
         return catalogId;
     }

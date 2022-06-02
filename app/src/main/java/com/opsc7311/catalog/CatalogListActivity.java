@@ -36,18 +36,24 @@ import java.util.List;
 import java.util.Objects;
 
 public class CatalogListActivity extends AppCompatActivity {
+
+    //Firebase vars
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private StorageReference storageReference;
 
+    // Create a list of catalog object
     private List<Catalog> catalogList;
+    // Recycler view and adapter
     private RecyclerView recyclerView;
     private CatalogRecyclerAdapter catalogRecyclerAdapter;
 
+    // collection reference for catalog collection
     private CollectionReference collectionReference = db.collection("Catalog");
+
+    // TextView for when user has no catalogs
     private TextView noCatalogEntry;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +64,11 @@ public class CatalogListActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
+
         noCatalogEntry = findViewById(R.id.list_no_items);
         catalogList = new ArrayList<>();
 
+        // set recycler view and layout manager
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,7 +118,10 @@ public class CatalogListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        // Gets all the catalogs with the current users user ID
+        // Code steps found on Firebase documentation and modified to include call to user
+        // Id with catalog api (singleton)
+        // URL: https://firebase.google.com/docs/database/android/lists-of-data
         collectionReference.whereEqualTo("userId", CatalogApi.getInstance()
                 .getUserId())
                 .get()

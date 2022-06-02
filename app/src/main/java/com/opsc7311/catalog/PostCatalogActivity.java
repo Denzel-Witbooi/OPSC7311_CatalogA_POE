@@ -47,20 +47,23 @@ import java.util.List;
 import java.util.Objects;
 
 public class PostCatalogActivity extends AppCompatActivity implements View.OnClickListener {
+    // Get's gallery code which is 1
     private static final int GALLERY_CODE = 1;
+    // Tag for debugging
     private static final String TAG = "PostCatalogActivity";
 
+    // Post catalog vars
     private MaterialButton saveButton;
     private ProgressBar progressBar;
     private ImageView addPhotoButton;
     private EditText titleEditText;
 
     private Spinner categoryItems;
-
     private EditText descriptionEditText;
     private TextView currentUserTextView;
     private ImageView imageView;
 
+    // Current user's name and Id
     private String currentUserId;
     private String currentUserName;
 
@@ -75,7 +78,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     private CollectionReference collectionReference = db.collection("Catalog");
     FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     CollectionReference categoryRef = rootRef.collection("Category");
-
+    // To store imageURI in and put file
     private Uri imageUri;
 
 
@@ -83,10 +86,13 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog_post);
+        // Set's app bar elevation to 0
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
+        // Initialize storage reference
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        // Initialize firebaseAuth and assign auth instance
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.category_progressBar);
         titleEditText = findViewById(R.id.post_title_et);
@@ -103,7 +109,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
         addPhotoButton.setOnClickListener(this);
 
         progressBar.setVisibility(View.INVISIBLE);
-
+        // Get current user id and name based if singleton instance not null
         if (CatalogApi.getInstance() != null) {
             currentUserId = CatalogApi.getInstance().getUserId();
             currentUserName = CatalogApi.getInstance().getUsername();
@@ -112,7 +118,35 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
         }
 
         categoryItems = findViewById(R.id.category_items_spinner);
-
+        /**
+         * Title: How to populate a spinner with the result of a Firestore query?
+         * Author: StackOverflow
+         * Modification: check if the current user (name) is found in the catalog collection
+         *      Objects.equals(currentUserName, document.getString("userName"))
+         * URL: https://stackoverflow.com/questions/54988533/how-to-populate-a-spinner-with-the-result-of-a-firestore-query
+         * Code:
+         * FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+         * CollectionReference subjectsRef = rootRef.collection("subjects");
+         * Spinner spinner = (Spinner) findViewById(R.id.spinner);
+         * List<String> subjects = new ArrayList<>();
+         * ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, subjects);
+         * adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+         * spinner.setAdapter(adapter);
+         * subjectsRefRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+         *     @Override
+         *     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+         *         if (task.isSuccessful()) {
+         *             for (QueryDocumentSnapshot document : task.getResult()) {
+         *                 String subject = document.getString("name");
+         *                 subjects.add(subject);
+         *             }
+         *             adapter.notifyDataSetChanged();
+         *         }
+         *     }
+         * });
+         * By: Abubakar Siddique
+         * URL https://stackoverflow.com/users/11134589/abubakar-siddique
+         */
         List<String> categories = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

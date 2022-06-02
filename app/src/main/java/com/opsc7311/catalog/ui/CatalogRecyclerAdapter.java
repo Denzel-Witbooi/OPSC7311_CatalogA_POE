@@ -8,16 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.opsc7311.catalog.CatalogListActivity;
 import com.opsc7311.catalog.R;
 import com.opsc7311.catalog.model.Catalog;
 import com.squareup.picasso.Picasso;
@@ -54,8 +46,11 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
         viewHolder.name.setText(catalog.getUserName());
         imageUrl = catalog.getImageUrl();
         /**
+         * Author: Shaktisinh Jadeja
+         * Date: Apr 12, 2018
          * Using android time ago feature:
-         * https://medium.com/@shaktisinh/time-a-go-in-android-8bad8b171f87
+         * URL: https://medium.com/@shaktisinh/time-a-go-in-android-8bad8b171f87
+         * Code: String timeAgo = DateUtils.getRelativeTimeSpanString()
          */
         // * 1000 --> milliseconds
         String timeAgo = (String) DateUtils
@@ -65,6 +60,9 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
 
         /**
          * Use Picasso library to download and show image
+         * Author: Picasso library
+         * URL: https://square.github.io/picasso/
+         * Code: Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(imageView);
          */
         Picasso.get()
                 .load(imageUrl)
@@ -74,6 +72,10 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
 
     }
 
+    /**
+     * Get amount of items in catalogList
+     * @return
+     */
     @Override
     public int getItemCount() {
         return catalogList.size();
@@ -84,19 +86,16 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
         //TextView's
-        public TextView title;
+        public TextView title;      // Catalog name
         public TextView category;
         public TextView description;
         public TextView dateAdded;
-        public TextView name;
+        public TextView name;       // Current user's name
 
         //Image View
-        public ImageView image;
+        public ImageView image;     // Catalog image
 
         public ImageButton deleteButton;
-
-        String userId;
-        String username;
 
         public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
@@ -113,22 +112,7 @@ public class CatalogRecyclerAdapter extends RecyclerView.Adapter<CatalogRecycler
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Catalog catalog = catalogList.get(position);
-//                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//                        DocumentReference catalogRef = db.collection("Catalog")
-//                                .document(catalog.getCatalogId());
-//
-//                        catalogRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()) {
-//
-//                                } else {
-//
-//                                }
-//                            }
-//                        });
+                    // To-do: Delete a single catalog
                     }
             });
 

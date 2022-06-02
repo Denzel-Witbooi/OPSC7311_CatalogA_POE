@@ -2,15 +2,21 @@ package com.opsc7311.catalog.model;
 
 import com.google.firebase.Timestamp;
 
+
+/**
+ * Model class for a single Category
+ */
+
 public class Category {
 
-    private String name;
-    private String amount;
-    private String userId;
-    private Timestamp timeAdded;
-    private String userName;
-    private String imageUrl;
+    private String name;            // category name
+    private String amount;          // category goal
+    private String userId;          // userId to link to a category for specific user
+    private Timestamp timeAdded;    // Timestamp for time added
+    private String userName;        // userName same purpose as userId
+    private String imageUrl;        // stores the path of the image
 
+    // default constructor
     public Category() {
     }
 
@@ -23,6 +29,7 @@ public class Category {
         this.imageUrl = imageUrl;
     }
 
+    // Getters and Setters
     public String getName() {
         return name;
     }

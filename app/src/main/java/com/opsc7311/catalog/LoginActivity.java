@@ -33,19 +33,23 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //Button Vars
     private ImageButton BackButton;
     private Button registerButton;
     private Button loginButton;
 
+    //EditText and AutoCompleteTextView vars
     private AutoCompleteTextView emailAddress;
     private EditText password;
 
     private ProgressBar progressBar;
 
+    // Firebase vars
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
+    // Firestore instance var and collection ref to users collection var
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Users");
 
@@ -58,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         BackButton = findViewById(R.id.img_back);
+
+        //Sends user back to splash screen
         BackButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -89,6 +95,33 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to log in user with email and password
+     * Author: Google - Firebase
+     * URL: https://firebase.google.com/docs/auth/android/manage-users
+     * Code:
+     * mAuth.signInWithEmailAndPassword(email, password)
+     *         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+     *             @Override
+     *             public void onComplete(@NonNull Task<AuthResult> task) {
+     *                 if (task.isSuccessful()) {
+     *                     // Sign in success, update UI with the signed-in user's information
+     *                     Log.d(TAG, "signInWithEmail:success");
+     *                     FirebaseUser user = mAuth.getCurrentUser();
+     *                     updateUI(user);
+     *                 } else {
+     *                     // If sign in fails, display a message to the user.
+     *                     Log.w(TAG, "signInWithEmail:failure", task.getException());
+     *                     Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+     *                             Toast.LENGTH_SHORT).show();
+     *                     updateUI(null);
+     *                 }
+     *             }
+     *         });
+     *  Code Modified to use catalogApi (singleton) -to set instance of user details
+     * @param email
+     * @param pwd
+     */
     private void loginEmailPasswordUser(String email, String pwd) {
         progressBar.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(email)

@@ -69,7 +69,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 if (currentUser != null) {
                     //user is already logged in...
-
                 } else {
                     // no user yet...
                 }
@@ -100,6 +99,49 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to create a user wth and email, password with username
+     * Author: Google - Firebase
+     * Link to documentation used
+     * URL: https://firebase.google.com/docs/auth/android/manage-users
+     * Code:
+     * FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+     *
+     * user.updateEmail("user@example.com")
+     *         .addOnCompleteListener(new OnCompleteListener<Void>() {
+     *             @Override
+     *             public void onComplete(@NonNull Task<Void> task) {
+     *                 if (task.isSuccessful()) {
+     *                     Log.d(TAG, "User email address updated.");
+     *                 }
+     *             }
+     *         });
+     *
+     *  ******************
+     *  URL: https://firebase.google.com/docs/auth/android/password-auth
+     *  mAuth.createUserWithEmailAndPassword(email, password)
+     *         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+     *             @Override
+     *             public void onComplete(@NonNull Task<AuthResult> task) {
+     *                 if (task.isSuccessful()) {
+     *                     // Sign in success, update UI with the signed-in user's information
+     *                     Log.d(TAG, "createUserWithEmail:success");
+     *                     FirebaseUser user = mAuth.getCurrentUser();
+     *                     updateUI(user);
+     *                 } else {
+     *                     // If sign in fails, display a message to the user.
+     *                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
+     *                     Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+     *                             Toast.LENGTH_SHORT).show();
+     *                     updateUI(null);
+     *                 }
+     *             }
+     *         });
+     *  Modified to use new firebaseAuthcreateUserWithEmailAndPassword() method
+     * @param email
+     * @param password
+     * @param username
+     */
     private void createUserEmailAccount(String email, String password, String username)
     {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)

@@ -41,11 +41,17 @@ import java.util.Date;
 import java.util.Objects;
 
 public class AddCategoryActivity extends AppCompatActivity implements View.OnClickListener {
+    // Tag for debugging
     private static final String TAG = "AddCategoryActivity";
+
+    // Get's gallery code which is 1
     private static final int GALLERY_CODE = 1 ;
+
+    // Current user's name and Id
     private String currentUserId;
     private String currentUserName;
 
+    // Add Category vars
     private EditText categoryNameEd;
     private EditText categoryAmountEd;
     private ImageView addPhotoButton;
@@ -54,7 +60,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
     private ProgressBar progressBar;
     private MaterialButton createCategoryButton;
 
-
+    // Firebase vars
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser user;
@@ -62,19 +68,24 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
     // Connection to Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference storageReference;
-
     private CollectionReference collectionReference = db.collection("Category");
+    // To store imageURI in and put file
     private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
+        // Set's app bar elevation to 0
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+
+        // Initialize storage reference
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        // Initialize firebaseAuth and assign auth instance
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // Initialize widgets
         imageView = findViewById(R.id.category_imageView);
         progressBar = findViewById(R.id.category_progressBar);
         categoryNameEd = findViewById(R.id.category_name_ed);
@@ -89,12 +100,11 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         progressBar.setVisibility(View.INVISIBLE);
 
 
+        // Get current user id and name based if singleton instance not null
         if (CatalogApi.getInstance() != null) {
             currentUserId = CatalogApi.getInstance().getUserId();
             currentUserName = CatalogApi.getInstance().getUsername();
-
         }
-
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -106,13 +116,16 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         };
-
     }
 
 
 
     /**
      * Method to save a category
+     * Code based of snippets from firebase fire-store documentation
+     * URL: https://firebase.google.com/docs/firestore/manage-data/add-data
+     * Upload image to storage reference
+     * URL: https://firebase.google.com/docs/storage/web/upload-files
      */
     private void saveCategory(){
         final String name = categoryNameEd.getText().toString().trim();
@@ -137,7 +150,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                                 public void onSuccess(Uri uri) {
 
                                     String imageUrl = uri.toString();
-                                    //TODO: create a Catalog Object - model : COMPLETE
+                                    // create a Catalog Object - model : COMPLETE
                                     Category category = new Category();
                                     category.setName(name);
                                     category.setAmount(amount);
@@ -146,7 +159,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                                     category.setUserName(currentUserName);
                                     category.setUserId(currentUserId);
 
-                                    //TODO: invoke our collectionReference
+                                    // invoke our collectionReference
                                     collectionReference.add(category)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
@@ -167,7 +180,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                                                     Log.d(TAG, "onFailure: " + e.getMessage());
                                                 }
                                             });
-                                    //TODO: and save a catalog instance
+                                    // and save a catalog instance
                                 }
                             });
                         }
@@ -179,6 +192,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
         } else {
+            // Validation if fields empty
             TextView error_catName;
             TextView error_catAmt;
             error_catName = findViewById(R.id.error_cat_name);
@@ -202,8 +216,11 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                         Toast.LENGTH_LONG).show();
             }
 
-
-
+            /**
+             * Listens to characters user enters in edit text field
+             * Author: Android dev - Written by Gautham Sajith
+             * URL: https://codelabs.developers.google.com/codelabs/mdc-101-java#2
+             */
             categoryNameEd.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -228,14 +245,38 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Method to check if text is null or larger than 3 characters
+     * @param text
+     * @return
+     */
     private boolean isTextValid(@Nullable String text) {
         return text != null && text.length() >= 3;
     }
+
+    /**
+     * Method to check if text is null or larger than 1 character
+     * @param text
+     * @return
+     */
     private boolean isAmountValid(@Nullable String text) {
         return text != null && text.length() >= 1;
     }
 
-
+    /**
+     * OnActivityResult is triggered when request to access gallery
+     * by clicking the image icon
+     * Checks if request = 1 for gallery and result code is = OK
+     * Intent is checked if its not null
+     * and gets the intent data (image uri)
+     * stores it in imageUri variable.
+     * and sets the imageView to show image
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     * Author: Android
+     * URL: https://developer.android.com/training/camera/photobasics
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -247,12 +288,22 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Inflates the menu resource to add category activity.xml
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return  super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Gets current user logged in on start
+     * And initializes firebaseAuth -> listener
+     * Acts as a session
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -260,6 +311,9 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 
+    /**
+     * Ends session
+     */
     @Override
     protected void onStop() {
         super.onStop();
@@ -305,12 +359,13 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.action_home:
+                // Take users to home page
                 if (user != null && firebaseAuth != null) {
                     startActivity(new Intent(AddCategoryActivity.this, CatalogListActivity.class));
                 }
                 break;
             case R.id.action_category:
-
+                // Take users to add Category
                 startActivity(new Intent(AddCategoryActivity.this, AddCategoryActivity.class));
 
                 break;
