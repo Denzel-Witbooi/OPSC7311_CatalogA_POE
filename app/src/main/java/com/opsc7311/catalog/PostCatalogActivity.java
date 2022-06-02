@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,9 +123,9 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String subject = document.getString("name");
+                        String category = document.getString("name");
                         if (Objects.equals(currentUserName, document.getString("userName"))) {
-                            categories.add(subject);
+                            categories.add(category);
                         }
                     }
                     adapter.notifyDataSetChanged();
@@ -251,6 +252,10 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                                                 @Override
                                                 public void onSuccess(DocumentReference documentReference) {
 
+                                                    Toast.makeText(PostCatalogActivity.this,
+                                                            "Catalog saved successfully!",
+                                                            Toast.LENGTH_LONG).show();
+
                                                     startActivity(new Intent(PostCatalogActivity.this,
                                                             CatalogListActivity.class));
                                                     progressBar.setVisibility(View.INVISIBLE);
@@ -263,7 +268,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                                                     Log.d(TAG, "onFailure: " + e.getMessage());
                                                 }
                                             });
-                                        //TODO: and save a catalog instance
+//                                       SAVE CATALOG INSTANCE
                                 }
                             });
                         }
@@ -276,8 +281,36 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                     });
         } else {
 
-            progressBar.setVisibility(View.VISIBLE);
+            TextView error_postName;
+            error_postName = findViewById(R.id.error_post_name);
+
+            if (!isTextValid(title)) {
+                error_postName.setText("Please enter more than 3 characters");
+            } else {
+                error_postName.setText(null); // Clear the error
+            }
+
+            if (imageUri == null){
+                Toast.makeText(PostCatalogActivity.this,
+                        "Please upload an Image!",
+                        Toast.LENGTH_LONG).show();
+            }
+
+            titleEditText.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                    if (isTextValid(String.valueOf(titleEditText.getText()))) {
+                        error_postName.setText(null); // Clear the error
+                    }
+                    return false;
+                }
+            });
+            progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private boolean isTextValid(@Nullable String text) {
+        return text != null && text.length() >= 3;
     }
 
     @Override
@@ -296,8 +329,6 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
         super.onStart();
         user = firebaseAuth.getCurrentUser();
         firebaseAuth.addAuthStateListener(authStateListener);
-
-
     }
 
     @Override

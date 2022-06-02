@@ -135,7 +135,7 @@ public class CatalogListActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // TODO: OnFailure for CatalogList
+                        noCatalogEntry.setVisibility(View.VISIBLE);
                     }
                 });
     }

@@ -31,17 +31,19 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CreateAccountActivity extends AppCompatActivity {
+    //BUTTONS VARS
     private Button loginButton;
     private Button createAcctButton;
+    //FIREBASE VARS
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
     //Firestore connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     private CollectionReference collectionReference = db.collection("Users");
 
+    // EDIT_TEXT AND PROGRESS_BAR VARS
     private EditText userNameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -52,7 +54,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         firebaseAuth = FirebaseAuth.getInstance();
         createAcctButton = findViewById(R.id.create_acc_button);
         userNameEditText = findViewById(R.id.register_username_ed);
@@ -77,20 +79,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         createAcctButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!TextUtils.isEmpty(emailEditText.getText().toString())
-                        &&!TextUtils.isEmpty(passwordEditText.getText().toString())
-                        && !TextUtils.isEmpty(userNameEditText.getText().toString()) ) {
-
                     String email = emailEditText.getText().toString().trim();
                     String password = passwordEditText.getText().toString().trim();
                     String username = userNameEditText.getText().toString().trim();
 
+                    //METHOD TO CREATE NEW USER WITH EMAIL AND PASSWORD, USERNAME
                     createUserEmailAccount(email, password, username);
-                } else {
-                    Toast.makeText(CreateAccountActivity.this, "Empty Fields Not Allowed",
-                            Toast.LENGTH_LONG).show();
-                }
-
             }
         });
 
@@ -177,7 +171,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                     });
 
         } else {
-
+            progressBar.setVisibility(View.INVISIBLE);
+            Toast.makeText(CreateAccountActivity.this,
+                    "Please enter valid details",
+                    Toast.LENGTH_LONG).show();
         }
     }
 }

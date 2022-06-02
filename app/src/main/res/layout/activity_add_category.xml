@@ -7,6 +7,20 @@
     tools:context=".AddCategoryActivity">
 
 
+    <TextView
+        android:id="@+id/error_cat_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#F10606"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_amount_ed" />
+
     <EditText
         android:id="@+id/category_name_ed"
         android:layout_width="384dp"
@@ -26,14 +40,14 @@
         android:id="@+id/category_amount_ed"
         android:layout_width="384dp"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/input_outline"
         android:ems="10"
         android:hint="Enter goal for categories"
         android:inputType="textPersonName"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category_name_ed" />
 
@@ -60,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent"  />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/create_category_button"
@@ -102,5 +116,18 @@
         app:layout_constraintStart_toStartOf="@+id/category_imageView"
         app:layout_constraintTop_toTopOf="@+id/category_imageView"
         app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <TextView
+        android:id="@+id/error_cat_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#F10606"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_name_ed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

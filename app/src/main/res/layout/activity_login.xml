@@ -77,7 +77,13 @@
             android:paddingLeft="10dp">
 
         </EditText>
-
+        <ProgressBar
+            android:id="@+id/login_acct_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -116,12 +122,7 @@
             android:textColor="@color/purple_500"
             android:textSize="10sp" />
 
-        <ProgressBar
-            android:id="@+id/login_acct_progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 

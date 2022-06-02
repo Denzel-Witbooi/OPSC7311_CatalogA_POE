@@ -51,13 +51,15 @@
 
     <Button
         android:id="@+id/startButton"
-        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/Splash_Desc"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="50dp"
         android:width="308dp"
         android:background="@android:color/transparent"
+        android:paddingTop="10dp"
         android:text="@string/get_started"
         android:textColor="#FA955C"
         app:cornerRadius="@android:dimen/thumbnail_height" />

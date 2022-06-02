@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         firebaseAuth = FirebaseAuth.getInstance();
 
         BackButton = findViewById(R.id.img_back);
@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         } else {
+
             progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(LoginActivity.this,
                     "Please enter email and password",

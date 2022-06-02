@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         getStartedButton = findViewById(R.id.startButton);
 
-        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

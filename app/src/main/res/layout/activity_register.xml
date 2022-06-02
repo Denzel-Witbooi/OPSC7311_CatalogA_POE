@@ -79,15 +79,13 @@
             android:id="@+id/register_password_ed"
             android:layout_marginTop="10dp"/>
 
-<!--        <EditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Confirm Password"-->
-<!--            android:height="57dp"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:paddingLeft="10dp"-->
-<!--            android:id="@+id/Reg_Confirm"-->
-<!--            android:layout_marginTop="10dp"/>-->
+        <ProgressBar
+            android:id="@+id/create_acct_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <Button
@@ -123,11 +121,6 @@
             android:textSize="10sp" />
 
     </LinearLayout>
-        <ProgressBar
-            android:id="@+id/create_acct_progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
 
 </RelativeLayout>

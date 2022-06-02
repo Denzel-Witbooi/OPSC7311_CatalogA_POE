@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -118,7 +121,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         progressBar.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(name) &&
-                !TextUtils.isEmpty(amount)) {
+                !TextUtils.isEmpty(amount) && imageUri != null) {
 
             final StorageReference filepath = storageReference //.../catalog_images/our_image.jpeg
                     .child("category_images")
@@ -150,6 +153,9 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                                                 public void onSuccess(DocumentReference documentReference) {
 
                                                     progressBar.setVisibility(View.INVISIBLE);
+                                                    Toast.makeText(AddCategoryActivity.this,
+                                                            "Category saved successfully!",
+                                                            Toast.LENGTH_LONG).show();
                                                     startActivity(new Intent(AddCategoryActivity.this,
                                                             PostCatalogActivity.class));
                                                     finish();
@@ -173,10 +179,62 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
         } else {
+            TextView error_catName;
+            TextView error_catAmt;
+            error_catName = findViewById(R.id.error_cat_name);
+            error_catAmt = findViewById(R.id.error_cat_amount);
 
-            progressBar.setVisibility(View.VISIBLE);
+            if (!isTextValid(name)) {
+                error_catName.setText("Please enter more than 3 characters");
+            } else {
+                error_catName.setText(null); // Clear the error
+            }
+
+            if (!isAmountValid(amount)) {
+                error_catAmt.setText("Please enter 1 or more item goal");
+            } else {
+                error_catAmt.setText(null); // Clear the error
+            }
+
+            if (imageUri == null){
+                Toast.makeText(AddCategoryActivity.this,
+                        "Please upload an Image!",
+                        Toast.LENGTH_LONG).show();
+            }
+
+
+
+            categoryNameEd.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                    if (isTextValid(String.valueOf(categoryNameEd.getText()))) {
+                        error_catName.setText(null); // Clear the error
+                    }
+                    return false;
+                }
+            });
+
+            categoryAmountEd.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                    if (isTextValid(String.valueOf(categoryAmountEd.getText()))) {
+                        error_catAmt.setText(null); // Clear the error
+                    }
+                    return false;
+                }
+            });
+
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
+
+    private boolean isTextValid(@Nullable String text) {
+        return text != null && text.length() >= 3;
+    }
+    private boolean isAmountValid(@Nullable String text) {
+        return text != null && text.length() >= 1;
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -216,9 +274,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
             case R.id.create_category_button:
                 // save catalog
                 saveCategory();
-                Toast.makeText(AddCategoryActivity.this,
-                        "Category saved successfully!",
-                        Toast.LENGTH_LONG).show();
+
                 break;
             case R.id.categoryCameraButton:
                 // get image from gallery/phone
