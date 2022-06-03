@@ -3,7 +3,7 @@
 
 #### Group:
 * Mckyle - UI Design 
-* Connor - DB analyse and Testing
+* Connor - DBA and Testing
 * Denzel - Developer 
 
 #### Logo:
