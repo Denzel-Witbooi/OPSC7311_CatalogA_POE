@@ -1,7 +1,8 @@
 # catalogA+
 ### Youtube URL: https://youtu.be/aIAs0efi3Pg 
 
-* Mickey - UI Design 
+#### Group:
+* Mckyle - UI Design 
 * Connor - DB analyse and Testing
 * Denzel - Developer 
 
