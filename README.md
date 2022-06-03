@@ -1,4 +1,4 @@
-# CatalogA+
+# Catalog+
 ### Youtube URL: https://youtu.be/aIAs0efi3Pg 
 
 
@@ -9,8 +9,8 @@
 
 
 ### User log-in details
-* Email:_____  Password: ____
-* Email:_____  Password: _____ 
+* Email:jane@gmail.com      Password: password
+* Email: maggy01@gmail.com  Password: password
 
 
 ### Logo:
