@@ -6,12 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +44,7 @@ public class CatalogListActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private ProgressBar progressBar;
     // Create a list of catalog object
     private List<Catalog> catalogList;
     // Recycler view and adapter
@@ -63,7 +66,7 @@ public class CatalogListActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-
+        progressBar = findViewById(R.id.progressBar_search);
 
         noCatalogEntry = findViewById(R.id.list_no_items);
         catalogList = new ArrayList<>();
@@ -77,8 +80,62 @@ public class CatalogListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        //SearchView
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // called when we press search button
+                searchData(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // called when we type even a single letter
+                return false;
+            }
+        });
         return  super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Method to search database for different categories
+     * @param query
+     */
+    private void searchData(String query)
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        collectionReference.whereEqualTo("category", query.toLowerCase())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        catalogList.clear();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (QueryDocumentSnapshot catalogs : queryDocumentSnapshots) {
+                                Catalog catalog = catalogs.toObject(Catalog.class);
+                                catalogList.add(catalog);
+                            }
+                            // Invoke recyclerView
+                            catalogRecyclerAdapter = new CatalogRecyclerAdapter(
+                                    CatalogListActivity.this, catalogList);
+                            recyclerView.setAdapter(catalogRecyclerAdapter);
+                            catalogRecyclerAdapter.notifyDataSetChanged();
+                        } else {
+                            noCatalogEntry.setVisibility(View.VISIBLE);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 
 

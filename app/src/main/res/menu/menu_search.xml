@@ -6,11 +6,11 @@
         android:title="@string/menu_title"
         app:showAsAction="ifRoom" />
 
-<!--    <item android:id="@+id/action_search"-->
-<!--        android:icon="@android:drawable/ic_menu_search"-->
-<!--        android:title="@string/search"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        app:actionViewClass="android.widget.SearchView"/>-->
+    <item android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView"/>
 
 
     <item android:id="@+id/action_signout"

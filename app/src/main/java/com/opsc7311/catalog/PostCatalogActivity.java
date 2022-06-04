@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,6 +53,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class PostCatalogActivity extends AppCompatActivity implements View.OnClickListener {
@@ -191,12 +194,15 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflating menu.xml
         getMenuInflater().inflate(R.menu.menu, menu);
-        return  super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+        // Handle other menu item clicks here
         switch (item.getItemId()){
             case R.id.action_add:
                 // Take users to add Catalog
@@ -219,9 +225,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.action_category:
-
                 startActivity(new Intent(PostCatalogActivity.this, AddCategoryActivity.class));
-
                 break;
 
         }
@@ -312,7 +316,7 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
      */
     private void saveCatalog(){
         final String title = titleEditText.getText().toString().trim();
-        final String category = categoryItems.getSelectedItem().toString();
+        final String category = categoryItems.getSelectedItem().toString().toLowerCase();
         final String description = descriptionEditText.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
