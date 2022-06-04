@@ -2,11 +2,16 @@ package com.opsc7311.catalog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -37,6 +42,7 @@ import com.opsc7311.catalog.model.Catalog;
 import com.opsc7311.catalog.model.Category;
 import com.opsc7311.catalog.util.CatalogApi;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.Objects;
 
@@ -44,8 +50,9 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
     // Tag for debugging
     private static final String TAG = "AddCategoryActivity";
 
-    // Get's gallery code which is 1
-    private static final int GALLERY_CODE = 1 ;
+    // Get's gallery code which is 2
+    private static final int take_photo = 1;
+    private static final int GALLERY_CODE = 2;
 
     // Current user's name and Id
     private String currentUserId;
@@ -263,30 +270,6 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         return text != null && text.length() >= 1;
     }
 
-    /**
-     * OnActivityResult is triggered when request to access gallery
-     * by clicking the image icon
-     * Checks if request = 1 for gallery and result code is = OK
-     * Intent is checked if its not null
-     * and gets the intent data (image uri)
-     * stores it in imageUri variable.
-     * and sets the imageView to show image
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     * Author: Android
-     * URL: https://developer.android.com/training/camera/photobasics
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
-            if (data != null) {
-                imageUri = data.getData(); // we have the actual path to the image
-                imageView.setImageURI(imageUri); //show image
-            }
-        }
-    }
 
     /**
      * Inflates the menu resource to add category activity.xml
@@ -332,11 +315,71 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.categoryCameraButton:
                 // get image from gallery/phone
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALLERY_CODE);
+                selectImage();
                 break;
         }
+    }
+
+    private void selectImage() {
+        final CharSequence[] options = { "Take a Photo", "Choose from Gallery","Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddCategoryActivity.this);
+        builder.setTitle("Add a Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take a Photo"))
+                {
+                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(camera_intent, take_photo);
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent gallery_intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    gallery_intent.setType("image/*");
+                    startActivityForResult(gallery_intent, GALLERY_CODE);
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * OnActivityResult is triggered when request to access gallery
+     * by clicking the image icon
+     * Checks if request = 1 for gallery and result code is = OK
+     * Intent is checked if its not null
+     * and gets the intent data (image uri)
+     * stores it in imageUri variable.
+     * and sets the imageView to show image
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     * Author: Android
+     * URL: https://developer.android.com/training/camera/photobasics
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == take_photo && resultCode == RESULT_OK) {
+            if (data != null) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                imageUri = getImageUri(this,photo);
+                imageView.setImageBitmap(photo); //show image
+            }
+        } else if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
+            imageUri = data.getData(); // we have the actual path to the image
+            imageView.setImageURI(imageUri); //show image
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     @Override

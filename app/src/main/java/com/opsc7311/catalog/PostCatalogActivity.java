@@ -1,6 +1,7 @@
 package com.opsc7311.catalog;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,15 +47,17 @@ import com.opsc7311.catalog.model.Catalog;
 import com.opsc7311.catalog.util.CatalogApi;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class PostCatalogActivity extends AppCompatActivity implements View.OnClickListener {
-    // Get's gallery code which is 1
-    private static final int GALLERY_CODE = 1;
-    private static final int pic_id = 123;
+    // Get's gallery code which is 2
+    private static final int take_photo = 1;
+    private static final int GALLERY_CODE = 2;
+
     // Tag for debugging
     private static final String TAG = "PostCatalogActivity";
 
@@ -236,13 +240,71 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.postCameraButton:
                 // get image from gallery/phone
-                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camera_intent, pic_id);
-//                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                galleryIntent.setType("image/*");
-//                startActivityForResult(galleryIntent, GALLERY_CODE);
+                selectImage();
                 break;
         }
+    }
+
+    /**
+     * Title: Capture Image From Camera and Select Image From Gallery of Android Phone Using Android Studio
+     * Author: Chhavi Goel
+     * Date uploaded:  17 February 2020
+     * URL: https://www.c-sharpcorner.com/UploadFile/e14021/capture-image-from-camera-and-selecting-image-from-gallery-o/
+     * Original CODE:
+     *       private void selectImage() {
+     *         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+     *         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+     *         builder.setTitle("Add Photo!");
+     *         builder.setItems(options, new DialogInterface.OnClickListener() {
+     *             @Override
+     *             public void onClick(DialogInterface dialog, int item) {
+     *                 if (options[item].equals("Take Photo"))
+     *                 {
+     *                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+     *                     File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+     *                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+     *                     startActivityForResult(intent, 1);
+     *                 }
+     *                 else if (options[item].equals("Choose from Gallery"))
+     *                 {
+     *                     Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+     *                     startActivityForResult(intent, 2);
+     *                 }
+     *                 else if (options[item].equals("Cancel")) {
+     *                     dialog.dismiss();
+     *                 }
+     *             }
+     *         });
+     *         builder.show();
+     *     }
+     * Modification:
+     *  Reduced intent instantiation to one line of code e.x take - photo { Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); }
+     *  Added path- gallery_intent.setType("image/*"); - for choose from gallery option
+     */
+    private void selectImage() {
+        final CharSequence[] options = { "Take a Photo", "Choose from Gallery","Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostCatalogActivity.this);
+        builder.setTitle("Add a Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take a Photo"))
+                {
+                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(camera_intent, take_photo);
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent gallery_intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    gallery_intent.setType("image/*");
+                    startActivityForResult(gallery_intent, GALLERY_CODE);
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
     /**
@@ -357,13 +419,15 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == pic_id && resultCode == RESULT_OK) {
+        if (requestCode == take_photo && resultCode == RESULT_OK) {
             if (data != null) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 imageUri = getImageUri(this,photo);
-//                imageUri = data.getData(); // we have the actual path to the image
                 imageView.setImageBitmap(photo); //show image
             }
+        } else if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
+            imageUri = data.getData(); // we have the actual path to the image
+            imageView.setImageURI(imageUri); //show image
         }
     }
 
