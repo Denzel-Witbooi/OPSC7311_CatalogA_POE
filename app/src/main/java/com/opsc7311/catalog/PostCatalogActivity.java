@@ -1,8 +1,11 @@
 package com.opsc7311.catalog;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -41,6 +44,7 @@ import com.google.firebase.storage.UploadTask;
 import com.opsc7311.catalog.model.Catalog;
 import com.opsc7311.catalog.util.CatalogApi;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +53,7 @@ import java.util.Objects;
 public class PostCatalogActivity extends AppCompatActivity implements View.OnClickListener {
     // Get's gallery code which is 1
     private static final int GALLERY_CODE = 1;
+    private static final int pic_id = 123;
     // Tag for debugging
     private static final String TAG = "PostCatalogActivity";
 
@@ -231,9 +236,11 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.postCameraButton:
                 // get image from gallery/phone
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALLERY_CODE);
+                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera_intent, pic_id);
+//                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//                galleryIntent.setType("image/*");
+//                startActivityForResult(galleryIntent, GALLERY_CODE);
                 break;
         }
     }
@@ -350,12 +357,31 @@ public class PostCatalogActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
+        if (requestCode == pic_id && resultCode == RESULT_OK) {
             if (data != null) {
-                imageUri = data.getData(); // we have the actual path to the image
-                imageView.setImageURI(imageUri); //show image
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                imageUri = getImageUri(this,photo);
+//                imageUri = data.getData(); // we have the actual path to the image
+                imageView.setImageBitmap(photo); //show image
             }
         }
+    }
+
+    /**
+     * Method to convert Bitmap to Uri
+     * Title: Android getting image URI from bitmap
+     * Author: colinyeoh
+     * Date posted: 18 May 2012
+     * https://colinyeoh.wordpress.com/2012/05/18/android-getting-image-uri-from-bitmap/
+     * @param inContext
+     * @param inImage
+     * @return
+     */
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     @Override
